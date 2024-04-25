@@ -1,16 +1,14 @@
 package com.io.simocach_android.domains.sensors.data
 
+import android.content.Context
 import android.util.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
 import io.ktor.websocket.*
-
 import kotlinx.coroutines.*
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -19,11 +17,17 @@ class WebSocketClient(private val serverUrl: String) {
     companion object {
         private var sWebSocketClient: WebSocketClient? = null
         private val lock = Any()
+        private lateinit var context: Context
+        fun init(context: Context) {
+            this.context = context
+        }
 
         fun getInstance(): WebSocketClient {
             synchronized(lock) {
                 if (sWebSocketClient == null) {
-                    sWebSocketClient = WebSocketClient("192.168.4.1")
+                    val prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                    val websocketIp = prefs.getString("websocket_ip", "192.168.4.1") ?: "192.168.4.1"
+                    sWebSocketClient = WebSocketClient(websocketIp)
                 }
                 return sWebSocketClient!!
             }

@@ -8,14 +8,17 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.io.simocach_android.domains.sensors.MySensor
 import com.io.simocach_android.ui.pages.SplashPage
+import com.io.simocach_android.ui.pages.about.AboutPage
 import com.io.simocach_android.ui.pages.home.HomePage
 import com.io.simocach_android.ui.pages.sensor.SensorPage
+import com.io.simocach_android.ui.pages.settings.SettingPage
 
 sealed class NavDirectionsApp(val route: String) {
     data object Root : NavDirectionsApp("root")
     data object HomePage : NavDirectionsApp("home_page")
     data object SensorDetailPage : NavDirectionsApp("sensor_detail_page")
     data object AboutPage : NavDirectionsApp("about_page")
+    data object SettingPage : NavDirectionsApp("setting_page")
     data object Splash : NavDirectionsApp("splash_page")
 }
 
@@ -43,7 +46,9 @@ fun NavGraphApp() {
 
             )
         }
-//        composable(NavDirectionsApp.AboutPage.route) { AboutPage(navController = navController) }
+        composable(NavDirectionsApp.AboutPage.route) { AboutPage(navController = navController) }
+
+        composable(NavDirectionsApp.SettingPage.route) { SettingPage(navController = navController) }
     }
 
 }

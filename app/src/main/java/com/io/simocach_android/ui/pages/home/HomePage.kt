@@ -1,8 +1,6 @@
 package com.io.simocach_android.ui.pages.home
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -11,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -30,6 +27,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,7 +44,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.io.simocach_android.R
-import com.io.simocach_android.domains.sensors.SensorData
 import com.io.simocach_android.ui.pages.home.items.*
 import com.io.simocach_android.ui.pages.home.sections.*
 import com.io.simocach_android.ui.navigation.NavDirectionsApp
@@ -69,7 +65,7 @@ import kotlinx.coroutines.launch
 //    ExperimentalLayoutApi::class, ExperimentalTextApi::class,
 //    ExperimentalAnimationApi::class, // ExperimentalPagerApi::class
 )
-@Preview(showBackground = true, backgroundColor = 0xFF041B11)
+@Preview(showBackground = true, backgroundColor = 0xFF0C100E) // 0xFF041B11
 @Composable
 fun HomePage(
     modifier: Modifier = Modifier, navController: NavController? = null,
@@ -100,6 +96,7 @@ fun HomePage(
     val pagerState = rememberPagerState(
         pageCount = { activeSensorStateList.value.size },
     )
+// TODOS:
 
 
 
@@ -117,14 +114,18 @@ fun HomePage(
 
             navigationIcon = {
                 Box(Modifier.padding(horizontal = Dimens.dp20)) {
-                    Image(
-                        painterResource(id = R.drawable.pic_logo),
-                        modifier = Modifier
-                            .width(Dimens.dp32)
-                            .height(Dimens.dp36),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds
-                    )
+                    IconButton(onClick = { navController?.navigate(NavDirectionsApp.SettingPage.route) }) {
+                        Image(
+                            painterResource(id = R.drawable.pic_logo),
+                            modifier = Modifier
+                                .width(Dimens.dp32)
+                                .height(Dimens.dp36),
+    //                            .clickable { navController?.navigate(NavDirectionsApp.SettingPage.route) },
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds
+                        )
+
+                    }
                 }
 
             },
@@ -141,7 +142,6 @@ fun HomePage(
             actions = {
                 Box(Modifier.padding(horizontal = Dimens.dp20)) {
                     Image(
-
                         painterResource(id = R.drawable.pic_logo),
                         modifier = Modifier
                             .alpha(0f)
